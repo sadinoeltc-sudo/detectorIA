@@ -1,135 +1,151 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leonic_tC Detector de IA — Versión Profesional</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Segoe UI", Arial, sans-serif;
-      background-color: #EAF2FA;
-      color: #1A3C73;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leonic_tC Detector de IA — Versión Profesional</title>
+<style>
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #EAF2FA;
+    color: #1A3C73;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-    .left-panel {
-      flex: 2;
-      padding: 30px;
-      background-color: #ffffff;
-      box-shadow: inset -2px 0 8px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-    }
+  .left-panel {
+    flex: 2;
+    padding: 25px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .right-panel {
-      flex: 1;
-      background: linear-gradient(180deg, #1A3C73, #2E5984);
-      color: #ffffff;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-shadow: -4px 0 10px rgba(0,0,0,0.2);
-    }
+  .right-panel {
+    flex: 1;
+    background: linear-gradient(180deg, #1A3C73, #2E5984);
+    color: #fff;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: -4px 0 10px rgba(0,0,0,0.15);
+  }
 
-    h1 {
-      text-align: center;
-      color: #1A3C73;
-      margin-bottom: 10px;
-    }
+  h1 {
+    text-align: center;
+    color: #1A3C73;
+    margin-bottom: 10px;
+  }
 
-    .author {
-      text-align: center;
-      font-size: 14px;
-      color: #4A6FA5;
-      margin-bottom: 15px;
-    }
+  .author { text-align: center; color: #4A6FA5; font-size: 14px; margin-bottom: 15px; }
 
-    textarea {
-      flex: 1;
-      resize: none;
-      border: 2px solid #cfd8e3;
-      border-radius: 8px;
-      padding: 15px;
-      font-size: 16px;
-      line-height: 1.5;
-      background: #F9FBFD;
-      color: #1A3C73;
-    }
+  textarea {
+    flex: 1;
+    border: 2px solid #cfd8e3;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none;
+  }
 
-    input[type="file"] {
-      margin-bottom: 10px;
-      color: #1A3C73;
-    }
+  button {
+    background: #4A6FA5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 5px 0;
+    cursor: pointer;
+    width: 100%;
+    font-size: 15px;
+    transition: background 0.3s ease;
+  }
 
-    button {
-      background: #4A6FA5;
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 15px;
-      padding: 10px;
-      margin: 5px 0;
-      cursor: pointer;
-      transition: background 0.3s ease;
-      width: 100%;
-    }
+  button:hover { background: #3a5a8a; }
+  button:disabled { background: #7a8ea7; cursor: not-allowed; }
 
-    button:hover {
-      background: #3a5a8a;
-    }
+  #score {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+    border-radius: 6px;
+    padding: 8px;
+  }
 
-    button:disabled {
-      background: #7a8ea7;
-      cursor: not-allowed;
-    }
+  .score-acceptable { background: #d4efdf; color: #1e8449; }
+  .score-warning { background: #fcf3cf; color: #b9770e; }
+  .score-unacceptable { background: #f5b7b1; color: #922b21; }
 
-    #results {
-      background: #ffffff;
-      color: #1A3C73;
-      border-radius: 8px;
-      padding: 10px;
-      margin-top: 10px;
-      max-height: 300px;
-      overflow-y: auto;
-    }
+  #results {
+    background: #fff;
+    color: #1A3C73;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
 
-    #score {
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 10px;
-      border-radius: 5px;
-      padding: 8px;
-    }
+  .highlight { background: #ffeb99; font-weight: bold; }
 
-    .score-acceptable { background: #d4efdf; color: #1e8449; }
-    .score-warning { background: #fcf3cf; color: #b9770e; }
-    .score-unacceptable { background: #f5b7b1; color: #922b21; }
+  .logo { text-align: center; margin-top: 20px; }
+  .logo img { width: 70%; max-width: 220px; border-radius: 10px; border: 2px solid #EAF2FA; }
 
-    footer {
-      text-align: center;
-      font-size: 11px;
-      color: #cfd8e3;
-      margin-top: 15px;
-    }
+  footer { text-align: center; font-size: 11px; color: #cfd8e3; margin-top: 15px; }
 
-    .logo {
-      width: 100%;
-      text-align: center;
-      margin-top: 20px;
-    }
+  .human { background-color: #d4efdf; color: #1e8449; padding: 5px; margin: 5px 0; border-radius: 4px; }
+  .mixed { background-color: #fcf3cf; color: #b9770e; padding: 5px; margin: 5px 0; border-radius: 4px; }
+  .ai { background-color: #f5b7b1; color: #922b21; padding: 5px; margin: 5px 0; border-radius: 4px; }
 
-    .logo img {
-      width: 70%;
-      max-width: 220px;
-      border-radius: 10px;
-      border: 2px solid #EAF2FA;
-    }
-  </style>
+  /* Estilos para la ventana emergente */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .modal-content {
+    background: #fff;
+    color: #1A3C73;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .modal-content h2 {
+    margin-top: 0;
+    color: #1A3C73;
+  }
+
+  .modal-content p {
+    margin: 10px 0;
+    font-size: 14px;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #1A3C73;
+  }
+</style>
 </head>
 
 <body>
@@ -137,8 +153,7 @@
     <h1>Leonic_tC — Detector de IA</h1>
     <div class="author">Autor: Limber Leonidas Tintaya Condori</div>
     <p style="text-align:center;">Analiza textos y detecta probabilidad de uso de IA con precisión mejorada.</p>
-
-    <label for="inputText">Pega tu texto o carga un archivo:</label>
+    <label for="inputText">Pega tu texto o carga un documento:</label>
     <textarea id="inputText" placeholder="Escribe o pega tu texto aquí..., luego presiona Detectar IA."></textarea>
   </div>
 
@@ -148,136 +163,195 @@
       <button onclick="detectAI()">Detectar IA</button>
       <button onclick="clearAll()">Limpiar</button>
       <button id="exportBtn" onclick="exportResults()" disabled>Exportar Resultados</button>
+      <button onclick="showAbout()">Acerca de...</button>
       <div id="score"></div>
       <div id="results" style="display:none;">
         <div id="classification"></div>
-        <div id="explanation"></div>
+        <div id="details"></div>
+        <div id="highlighted-text" style="margin-top: 15px; font-size: 14px;"></div>
       </div>
     </div>
-
     <div class="logo">
       <img src="LeonictC Math IA.jpg" alt="Logo IA Bolivia">
     </div>
-	<footer>Primer detector de IA en Bolivia</footer>
-	
-	<footer>Contáctate con Leonic_tC al (+591) 78792646</footer>
+    <footer>Primer detector de IA en Bolivia</footer>
+    <footer>Contáctate con Leonic_tC al (+591) 78792646</footer>
     <footer>Versión profesional 2025 • Integrado con heurística + APIs (Sapling, GPTZero, Grok)</footer>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-  <script>
-    const API_KEYS = {
-      sapling: 'TU_SAPLING_KEY_AQUI',
-      gptzero: 'TU_GPTZERO_KEY_AQUI',
-      grok: { 
-        key: 'TU_XAI_API_KEY_AQUI',
-        baseUrl: 'https://api.x.ai/v1',
-        model: 'grok-4'
+  <!-- Ventana emergente para "Acerca de..." -->
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeAbout()">&times;</span>
+      <h2>Acerca de Leonic_tC Detector de IA</h2>
+      <p><strong>Autor:</strong> Limber Leonidas Tintaya Condori</p>
+      <p><strong>Licencia:</strong> Este software está protegido por derechos de autor. Todos los derechos reservados. No se permite la modificación, distribución o uso comercial sin permiso expreso del autor.</p>
+      <p><strong>Aviso:</strong> Código protegido - No modificar sin permiso.</p>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+async function handleFile() {
+  const file = document.getElementById('fileInput').files[0];
+  if (!file) return;
+  const textarea = document.getElementById('inputText');
+  textarea.value = 'Procesando archivo...';
+  try {
+    if (file.name.endsWith('.pdf')) {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+      let text = '';
+      for (let i=1; i<=pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(item=>item.str).join(' ') + '\n';
       }
-    };
+      textarea.value = text.trim();
+    } else if (file.name.endsWith('.docx')) {
+      const arrayBuffer = await file.arrayBuffer();
+      const result = await mammoth.extractRawText({ arrayBuffer });
+      textarea.value = result.value.trim();
+    } else if (file.name.endsWith('.txt')) {
+      textarea.value = await file.text();
+    } else {
+      alert("Formato no soportado. Usa PDF, DOCX o TXT.");
+      textarea.value = "";
+    }
+  } catch(e) {
+    alert("Error al procesar archivo: "+e.message);
+  }
+}
 
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+async function detectAI() {
+  const text = document.getElementById('inputText').value.trim();
+  if (!text) return alert("Por favor, ingresa texto o carga un archivo.");
+  const btn = document.querySelector('button[onclick="detectAI()"]');
+  btn.disabled = true; btn.textContent = 'Analizando...';
 
-    async function handleFile() {
-      const fileInput = document.getElementById('fileInput');
-      const file = fileInput.files[0];
-      if (!file) return;
-      const textarea = document.getElementById('inputText');
-      textarea.value = 'Procesando archivo...';
-      try {
-        if (file.name.endsWith('.pdf')) {
-          const arrayBuffer = await file.arrayBuffer();
-          const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
-          let text = '';
-          for (let i = 1; i <= pdf.numPages; i++) {
-            const page = await pdf.getPage(i);
-            const content = await page.getTextContent();
-            text += content.items.map(item => item.str).join(' ') + '\n';
-          }
-          textarea.value = text.trim();
-        } else if (file.name.endsWith('.docx')) {
-          const arrayBuffer = await file.arrayBuffer();
-          const result = await mammoth.extractRawText({ arrayBuffer });
-          textarea.value = result.value.trim();
-        } else if (file.name.endsWith('.txt')) {
-          textarea.value = await file.text();
-        } else {
-          alert('Formato no soportado. Usa PDF, DOCX o TXT.');
-          textarea.value = '';
-        }
-      } catch (error) {
-        alert('Error al procesar el archivo: ' + error.message);
-        textarea.value = '';
-      }
+  const heuristic = calculateHeuristicScore(text);
+  const perplexity = estimatePerplexity(text);
+  const segmented = segmentAnalysis(text);
+
+  const finalScore = Math.round((heuristic*0.4 + perplexity*0.4 + segmented*0.2));
+  const classification = getClassification(finalScore);
+  const explanation = getExplanation(finalScore);
+
+  document.getElementById('score').textContent = `Probabilidad de IA: ${finalScore}%`;
+  document.getElementById('score').className = finalScore<=20?'score-acceptable':finalScore<=50?'score-warning':'score-unacceptable';
+  document.getElementById('classification').innerHTML = `<strong>${classification}</strong>`;
+  document.getElementById('details').innerHTML = `<em>${explanation}</em>`;
+
+  highlightSegments(text);
+
+  document.getElementById('results').style.display = 'block';
+  document.getElementById('exportBtn').disabled = false;
+  btn.disabled = false; btn.textContent = 'Detectar IA';
+}
+
+function calculateHeuristicScore(text) {
+  const words = text.split(/\s+/).filter(w=>w.length>0);
+  const unique = new Set(words.map(w=>w.toLowerCase().replace(/[^\wáéíóúüñ]/g,'')));
+  const lexicalDiversity = unique.size / words.length;
+  const sentences = text.split(/[.!?]+/).filter(s=>s.trim().length>0);
+  const avgLen = sentences.map(s=>s.split(/\s+/).length).reduce((a,b)=>a+b,0)/sentences.length || 1;
+  const variance = sentences.map(s=>Math.pow(s.split(/\s+/).length-avgLen,2)).reduce((a,b)=>a+b,0)/sentences.length;
+  const burstiness = variance/avgLen;
+  const common = ['el','la','de','que','y','en','the','is','to'];
+  const repetition = words.filter(w=>common.includes(w.toLowerCase())).length/words.length;
+  let score = (1-lexicalDiversity)*40 + (1-burstiness/10)*30 + repetition*30;
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function estimatePerplexity(text) {
+  const words = text.split(/\s+/);
+  let avgWordLength = words.map(w=>w.length).reduce((a,b)=>a+b,0)/words.length;
+  let variation = Math.abs(avgWordLength - 5);
+  let punctuation = (text.match(/[.,!?;]/g)||[]).length / words.length;
+  let score = (variation*10 + (0.05-punctuation)*800);
+  return Math.max(0, Math.min(100, Math.round(score)));
+}
+
+function segmentAnalysis(text) {
+  const sentences = text.split(/[.!?]+/).filter(s=>s.trim().length>0);
+  let suspicious = sentences.filter(s=>s.split(/\s+/).length>25 || s.split(/\s+/).length<5).length;
+  return Math.round((suspicious / sentences.length) * 100);
+}
+
+function getClassification(score) {
+  if(score<=20) return "Principalmente Humano";
+  if(score<=50) return "Mezclado (Humano + IA)";
+  return "Principalmente IA";
+}
+
+function getExplanation(score) {
+  if(score<=20) return "Alta variabilidad, buena naturalidad lingüística: escritura humana.";
+  if(score<=50) return "Estructura mixta: podría haber intervención IA.";
+  return "Alta uniformidad, baja perplejidad: probable texto generado por IA.";
+}
+
+function highlightSegments(text) {
+  const sentences = text.split(/[.!?]+/).filter(s=>s.trim().length>0);
+  let highlighted = '';
+  sentences.forEach(sentence => {
+    const trimmed = sentence.trim();
+    if (!trimmed) return;
+
+    const heuristic = calculateHeuristicScore(trimmed);
+    const perplexity = estimatePerplexity(trimmed);
+    const wordCount = trimmed.split(/\s+/).length;
+    const segmented = (wordCount > 25 || wordCount < 5) ? 100 : (wordCount > 15 && wordCount < 30 ? 50 : 0);
+
+    const sentenceScore = Math.round((heuristic*0.4 + perplexity*0.4 + segmented*0.2));
+
+    let className;
+    if (sentenceScore <= 20) {
+      className = 'human';
+    } else if (sentenceScore <= 50) {
+      className = 'mixed';
+    } else {
+      className = 'ai';
     }
 
-    async function detectAI() {
-      const text = document.getElementById('inputText').value.trim();
-      if (!text) return alert("Por favor, ingresa texto o carga un archivo.");
-      const btn = document.querySelector('button[onclick="detectAI()"]');
-      btn.disabled = true; btn.textContent = 'Analizando...';
-      const heuristicScore = calculateAIScore(text);
-      const finalScore = heuristicScore;
-      const classification = getClassification(finalScore);
-      const explanation = getExplanation(finalScore);
-      document.getElementById('score').textContent = `Probabilidad de IA: ${finalScore}%`;
-      document.getElementById('score').className = finalScore<=20?'score-acceptable':finalScore<=50?'score-warning':'score-unacceptable';
-      document.getElementById('classification').textContent = classification;
-      document.getElementById('explanation').textContent = explanation;
-      document.getElementById('results').style.display = 'block';
-      document.getElementById('exportBtn').disabled = false;
-      btn.disabled = false; btn.textContent = 'Detectar IA';
-    }
+    highlighted += `<div class="${className}">${trimmed}.</div>`;
+  });
 
-    function calculateAIScore(text) {
-      const sentences = text.split(/[.!?]+/).filter(s=>s.trim().length>0);
-      const words = text.split(/\s+/).filter(w=>w.length>0);
-      const uniqueWords = new Set(words.map(w=>w.toLowerCase().replace(/[^\wáéíóúüñ]/g,'')));
-      const lexicalDiversity = uniqueWords.size/words.length;
-      const sentLengths = sentences.map(s=>s.split(/\s+/).length);
-      const avgLength = sentLengths.reduce((a,b)=>a+b,0)/sentLengths.length || 1;
-      const variance = sentLengths.reduce((a,b)=>a+Math.pow(b-avgLength,2),0)/sentLengths.length;
-      const burstiness = variance/avgLength;
-      const commonWords = ['el','la','de','que','y','en','the','is','to'];
-      const repetition = words.filter(w=>commonWords.includes(w.toLowerCase())).length/words.length;
-      let score = (1-lexicalDiversity)*40+(1-burstiness/10)*30+repetition*30;
-      return Math.round(Math.max(0,Math.min(100,score)));
-    }
+  document.getElementById('highlighted-text').innerHTML = '<strong>Texto resaltado por segmentos:</strong><br>' + highlighted;
+}
 
-    function getClassification(score){
-      if(score<=20) return "Principalmente Humano";
-      if(score<=50) return "Mezclado (Humano + IA)";
-      return "Principalmente IA";
-    }
+function clearAll() {
+  document.getElementById('inputText').value = '';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('score').textContent = '';
+  document.getElementById('score').className = '';
+  document.getElementById('exportBtn').disabled = true;
+  document.getElementById('highlighted-text').innerHTML = '';
+}
 
-    function getExplanation(score){
-      if(score<=20) return "Alta variación natural, típico de escritura humana.";
-      if(score<=50) return "Patrones mixtos, posible edición por IA.";
-      return "Alta uniformidad y repetición: probable texto generado por IA.";
-    }
+function exportResults() {
+  const s = document.getElementById('score').textContent;
+  const c = document.getElementById('classification').textContent;
+  const d = document.getElementById('details').textContent;
+  const h = document.getElementById('highlighted-text').innerText;
+  const content = `LeonictC Detector IA Pro\n\n${s}\n${c}\n\n${d}\n\nTexto Resaltado:\n${h}`;
+  const blob = new Blob([content], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'resultado_LeonictC_Pro.txt';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
 
-    function clearAll(){
-      document.getElementById('inputText').value='';
-      document.getElementById('fileInput').value='';
-      document.getElementById('results').style.display='none';
-      document.getElementById('score').textContent='';
-      document.getElementById('score').className='';
-      document.getElementById('exportBtn').disabled=true;
-    }
+function showAbout() {
+  document.getElementById('aboutModal').style.display = 'flex';
+}
 
-    function exportResults(){
-      const s=document.getElementById('score').textContent;
-      const c=document.getElementById('classification').textContent;
-      const e=document.getElementById('explanation').textContent;
-      const content=`LeonictC Detector IA - Resultados\n\n${s}\n${c}\n\n${e}`;
-      const blob=new Blob([content],{type:'text/plain'});
-      const a=document.createElement('a');
-      a.href=URL.createObjectURL(blob);
-      a.download='resultados_LeonictC.txt';
-      a.click();
-      URL.revokeObjectURL(a.href);
-    }
-  </script>
+function closeAbout() {
+  document.getElementById('aboutModal').style.display = 'none';
+}
+</script>
 </body>
 </html>
